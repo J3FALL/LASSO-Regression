@@ -3,4 +3,4 @@ project(LassoRegression)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(LassoRegression main.cpp)
+add_executable(LassoRegression main.cpp DataSet.cpp DataSet.h)
