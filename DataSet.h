@@ -9,8 +9,13 @@
 
 class DataSet {
 public:
-    std::vector<double> sample, target;
+    std::vector<std::vector<double>> sample;
+    std::vector<double> target;
+
     DataSet();
+
+private:
+    std::vector<double> polynomial(double x, int maxPower);
 };
 
 
