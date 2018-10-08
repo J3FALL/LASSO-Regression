@@ -23,6 +23,11 @@ public:
 
     double *ro();
 
+    double coordinateDescentStep(int weightIdx, double alpha);
+
+
+    double *cyclicalCoordinateDescent(double tolerance, double alpha);
+
 private:
 
     double **featuresMatrix(std::vector<std::vector<double>> samples);

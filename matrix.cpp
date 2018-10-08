@@ -16,7 +16,6 @@ double *vectorAdd(double *first, double *second, unsigned long vectorSize) {
 
 double *vectorMultiply(double *vector, unsigned long vectorSize, double constantValue) {
     double *result = new double[vectorSize];
-
     for (int idx = 0; idx < vectorSize; idx++) {
         result[idx] = vector[idx] * constantValue;
     }
