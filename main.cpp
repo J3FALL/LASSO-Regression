@@ -1,6 +1,7 @@
 #include <iostream>
 #include "DataSet.h"
 #include "LassoRegression.h"
+#include "matrix.h"
 
 using namespace std;
 
@@ -31,6 +32,15 @@ int main() {
     for (int idx = 0; idx < lasso->numberOfSamples; idx++) {
         std::cout << " " << lasso->target[idx];
     }
+    std::cout << std::endl;
+
+
+    double *ro = lasso->ro();
+
+    for (int idx = 0; idx < lasso->numberOfFeatures; idx++) {
+        std::cout << ' ' << ro[idx];
+    }
+    std::cout << std::endl;
 
     return 0;
 }

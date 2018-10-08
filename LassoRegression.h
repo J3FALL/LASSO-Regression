@@ -21,6 +21,8 @@ public:
 
     double *predictions();
 
+    double *ro();
+
 private:
 
     double **featuresMatrix(std::vector<std::vector<double>> samples);
@@ -30,6 +32,8 @@ private:
     double *initialWeights();
 
     double *targetAsArray(std::vector<double> target);
+
+    double *feature(int featureIdx);
 };
 
 

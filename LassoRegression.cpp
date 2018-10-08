@@ -3,6 +3,7 @@
 //
 
 #include "LassoRegression.h"
+#include "matrix.h"
 
 LassoRegression::LassoRegression(std::vector<std::vector<double>> samples, std::vector<double> target) {
     this->numberOfSamples = samples.size();
@@ -24,6 +25,20 @@ double *LassoRegression::predictions() {
     }
 
     return result;
+}
+
+double *LassoRegression::ro() {
+    double *results = new double[numberOfFeatures];
+
+    for (int idx = 0; idx < numberOfFeatures; idx++) {
+        double *penaltyVector = vectorMultiply(feature(idx), numberOfSamples, weights[idx]);
+        double *predictionDiff = vectorAdd(target, vectorMultiply(predictions(), numberOfSamples, -1), numberOfSamples);
+        double *roVector = vectorScalarMultiply(predictionDiff, penaltyVector, numberOfSamples);
+        double roValue = vectorSum(roVector, numberOfSamples);
+        results[idx] = roValue;
+    }
+
+    return results;
 }
 
 double **LassoRegression::featuresMatrix(std::vector<std::vector<double>> samples) {
@@ -62,6 +77,16 @@ double *LassoRegression::targetAsArray(std::vector<double> target) {
 
     for (int targetIdx = 0; targetIdx < target.size(); targetIdx++) {
         result[targetIdx] = target[targetIdx];
+    }
+
+    return result;
+}
+
+double *LassoRegression::feature(int featureIdx) {
+    double *result = new double[numberOfSamples];
+
+    for (int idx = 0; idx < numberOfSamples; idx++) {
+        result[idx] = features[idx][featureIdx];
     }
 
     return result;
