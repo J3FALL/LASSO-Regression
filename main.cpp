@@ -7,7 +7,7 @@ using namespace std;
 
 int main() {
     DataSet dataSet;
-    LassoRegression *lasso = new LassoRegression(dataSet.sample);
+    LassoRegression *lasso = new LassoRegression(dataSet.sample, dataSet.target);
 
     for (int sampleIdx = 0; sampleIdx < lasso->numberOfSamples; sampleIdx++) {
         for (int featureIdx = 0; featureIdx < lasso->numberOfFeatures; featureIdx++) {
@@ -15,5 +15,22 @@ int main() {
         }
         std::cout << std::endl;
     }
+
+    for (int idx = 0; idx < lasso->numberOfFeatures; idx++) {
+        std::cout << ' ' << lasso->weights[idx];
+    }
+
+
+    double *predictions = lasso->predictions();
+
+    for (int idx = 0; idx < lasso->numberOfSamples; idx++) {
+        std::cout << predictions[idx] << std::endl;
+    }
+
+
+    for (int idx = 0; idx < lasso->numberOfSamples; idx++) {
+        std::cout << " " << lasso->target[idx];
+    }
+
     return 0;
 }

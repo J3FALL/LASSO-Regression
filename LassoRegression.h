@@ -10,18 +10,26 @@
 class LassoRegression {
 public:
     double **features;
+    double *weights;
+    double *target;
 
     unsigned long numberOfSamples;
 
     unsigned long numberOfFeatures;
 
-    LassoRegression(std::vector<std::vector<double>> samples);
+    LassoRegression(std::vector<std::vector<double>> samples, std::vector<double> target);
+
+    double *predictions();
 
 private:
 
     double **featuresMatrix(std::vector<std::vector<double>> samples);
 
     double **emptyMatrix();
+
+    double *initialWeights();
+
+    double *targetAsArray(std::vector<double> target);
 };
 
 
