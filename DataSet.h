@@ -9,7 +9,7 @@
 
 class DataSet {
 public:
-    std::vector<double> x, y;
+    std::vector<double> sample, target;
     DataSet();
 };
 
