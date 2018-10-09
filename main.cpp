@@ -16,5 +16,5 @@ int main() {
     for (int idx = 0; idx < lasso->numberOfFeatures; ++idx) {
         std::cout << ' ' << weights[idx];
     }
-    return 0;
+
 }

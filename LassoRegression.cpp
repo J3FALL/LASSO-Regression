@@ -11,6 +11,7 @@ LassoRegression::LassoRegression(std::vector<std::vector<double>> samples, std::
     this->numberOfSamples = samples.size();
     this->numberOfFeatures = samples[0].size();
     this->features = featuresMatrix(samples);
+    this->features = normalizeFeatures(this->features);
     this->weights = initialWeights();
     this->target = targetAsArray(target);
 }
@@ -70,7 +71,7 @@ double *LassoRegression::cyclicalCoordinateDescent(double tolerance, double alph
         for (int weightIdx = 0; weightIdx < numberOfFeatures; ++weightIdx) {
             double oldWeight = weights[weightIdx];
             double newWeight = coordinateDescentStep(weightIdx, alpha);
-
+            std::cout << oldWeight << ' ' << newWeight << ' ' << weightIdx << std::endl;
             weights[weightIdx] = newWeight;
             double coordinateChange = fabs(oldWeight - newWeight);
 
@@ -91,10 +92,21 @@ double *LassoRegression::cyclicalCoordinateDescent(double tolerance, double alph
 double **LassoRegression::featuresMatrix(std::vector<std::vector<double>> samples) {
     double **matrix = emptyMatrix();
 
-    // TODO: add 2-form normalization
     for (int sampleIdx = 0; sampleIdx < numberOfSamples; sampleIdx++) {
         for (int featureIdx = 0; featureIdx < numberOfFeatures; featureIdx++) {
             matrix[sampleIdx][featureIdx] = samples[sampleIdx][featureIdx];
+        }
+    }
+
+    return matrix;
+}
+
+double **LassoRegression::normalizeFeatures(double **matrix) {
+
+    for (int featureIdx = 0; featureIdx < numberOfFeatures; ++featureIdx) {
+        double featureNorm = norm(feature(featureIdx), numberOfSamples);
+        for (int sampleIdx = 0; sampleIdx < numberOfSamples; ++sampleIdx) {
+            matrix[sampleIdx][featureIdx] /= featureNorm;
         }
     }
 

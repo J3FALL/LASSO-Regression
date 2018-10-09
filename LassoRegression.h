@@ -32,6 +32,8 @@ private:
 
     double **featuresMatrix(std::vector<std::vector<double>> samples);
 
+    double **normalizeFeatures(double **matrix);
+
     double **emptyMatrix();
 
     double *initialWeights();

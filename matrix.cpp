@@ -3,6 +3,8 @@
 //
 
 #include "matrix.h"
+#include <cmath>
+#include <iostream>
 
 double *vectorAdd(double *first, double *second, unsigned long vectorSize) {
     double *result = new double[vectorSize];
@@ -41,4 +43,13 @@ double vectorSum(double *vector, unsigned long vectorSize) {
     }
 
     return result;
+}
+
+double norm(double *vector, unsigned long vectorSize) {
+    double result = 0.0;
+    for (int idx = 0; idx < vectorSize; ++idx) {
+        result += pow(vector[idx], 2);
+    }
+
+    return sqrt(result);
 }

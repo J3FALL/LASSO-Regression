@@ -14,4 +14,6 @@ double *vectorScalarMultiply(double *first, double *second, unsigned long vector
 
 double vectorSum(double *vector, unsigned long vectorSize);
 
+double norm(double *vector, unsigned long vectorSize);
+
 #endif //LASSOREGRESSION_MATRIX_H
