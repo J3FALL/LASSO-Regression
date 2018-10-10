@@ -10,7 +10,7 @@ double *vectorAdd(double *first, double *second, unsigned long vectorSize);
 
 double *vectorMultiply(double *vector, unsigned long vectorSize, double constantValue);
 
-double *vectorScalarMultiply(double *first, double *second, unsigned long vectorSize);
+double *vectorMultiplyComponentWise(double *first, double *second, unsigned long vectorSize);
 
 double vectorSum(double *vector, unsigned long vectorSize);
 

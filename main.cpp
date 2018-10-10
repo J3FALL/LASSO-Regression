@@ -11,10 +11,10 @@ int main() {
     LassoRegression *lasso = new LassoRegression(dataSet.sample, dataSet.target);
 
 
-    double *weights = lasso->cyclicalCoordinateDescent(1.0, 1e-3);
+    double *weights = lasso->cyclicalCoordinateDescent(0.01, 0.01);
 
-    for (int idx = 0; idx < lasso->numberOfFeatures; ++idx) {
-        std::cout << ' ' << weights[idx];
+
+    for (int weightIdx = 0; weightIdx < lasso->numberOfFeatures; ++weightIdx) {
+        std::cout << " " << weights[weightIdx];
     }
-
 }

@@ -25,7 +25,7 @@ double *vectorMultiply(double *vector, unsigned long vectorSize, double constant
     return result;
 }
 
-double *vectorScalarMultiply(double *first, double *second, unsigned long vectorSize) {
+double *vectorMultiplyComponentWise(double *first, double *second, unsigned long vectorSize) {
     double *result = new double[vectorSize];
 
     for (int idx = 0; idx < vectorSize; idx++) {

@@ -11,9 +11,12 @@ LassoRegression::LassoRegression(std::vector<std::vector<double>> samples, std::
     this->numberOfSamples = samples.size();
     this->numberOfFeatures = samples[0].size();
     this->features = featuresMatrix(samples);
+
+
     this->features = normalizeFeatures(this->features);
     this->weights = initialWeights();
     this->target = targetAsArray(target);
+
 }
 
 double *LassoRegression::predictions() {
@@ -36,7 +39,9 @@ double *LassoRegression::ro() {
     for (int idx = 0; idx < numberOfFeatures; idx++) {
         double *penaltyVector = vectorMultiply(feature(idx), numberOfSamples, weights[idx]);
         double *predictionDiff = vectorAdd(target, vectorMultiply(predictions(), numberOfSamples, -1), numberOfSamples);
-        double *roVector = vectorScalarMultiply(predictionDiff, penaltyVector, numberOfSamples);
+        double *roVector = vectorMultiplyComponentWise(feature(idx),
+                                                       vectorAdd(predictionDiff, penaltyVector, numberOfSamples),
+                                                       numberOfSamples);
         double roValue = vectorSum(roVector, numberOfSamples);
         results[idx] = roValue;
     }
@@ -46,11 +51,12 @@ double *LassoRegression::ro() {
 
 double LassoRegression::coordinateDescentStep(int weightIdx, double alpha) {
     double *roValues = ro();
+
+
     double newWeight;
-
-
     if (weightIdx == 0) {
         newWeight = roValues[weightIdx];
+
     } else if (roValues[weightIdx] < (-1.0) * alpha / 2.0) {
         newWeight = roValues[weightIdx] + alpha / 2.0;
     } else if (roValues[weightIdx] > alpha / 2.0) {
@@ -68,22 +74,25 @@ double *LassoRegression::cyclicalCoordinateDescent(double tolerance, double alph
 
     while (condition) {
         maxChange = 0.0;
+        double *newWeights = new double[numberOfFeatures];
+
         for (int weightIdx = 0; weightIdx < numberOfFeatures; ++weightIdx) {
             double oldWeight = weights[weightIdx];
             double newWeight = coordinateDescentStep(weightIdx, alpha);
-            std::cout << oldWeight << ' ' << newWeight << ' ' << weightIdx << std::endl;
+            newWeights[weightIdx] = newWeight;
             weights[weightIdx] = newWeight;
             double coordinateChange = fabs(oldWeight - newWeight);
 
             if (coordinateChange > maxChange) {
                 maxChange = coordinateChange;
-                std::cout << " " << maxChange << std::endl;
-            }
-
-            if (coordinateChange < tolerance) {
-                condition = false;
+                std::cout << "MAX CHANGE: " << maxChange << " " << weightIdx << std::endl;
             }
         }
+        if (maxChange < tolerance) {
+            condition = false;
+        }
+
+
     }
 
     return weights;
@@ -126,7 +135,7 @@ double *LassoRegression::initialWeights() {
     double *weights = new double[numberOfFeatures];
 
     for (int idx = 0; idx < numberOfFeatures; idx++) {
-        weights[idx] = 0.0;
+        weights[idx] = 0.5;
     }
 
     return weights;
