@@ -28,6 +28,9 @@ public:
 
     double *cyclicalCoordinateDescent(double tolerance, double alpha);
 
+
+    void dumpWeightsToFile();
+
 private:
 
     double **featuresMatrix(std::vector<std::vector<double>> samples);

@@ -11,8 +11,8 @@
 DataSet::DataSet() {
     std::uniform_real_distribution<double> uniform(0, 0.15);
     std::default_random_engine engine;
-    //engine.seed(std::chrono::system_clock::now().time_since_epoch().count());
-    engine.seed(10);
+    engine.seed(std::chrono::system_clock::now().time_since_epoch().count());
+    //engine.seed(10);
 
 
     for (int deg = 60; deg < 300; deg+=4) {

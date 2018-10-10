@@ -6,6 +6,7 @@
 #include "matrix.h"
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 LassoRegression::LassoRegression(std::vector<std::vector<double>> samples, std::vector<double> target) {
     this->numberOfSamples = samples.size();
@@ -88,6 +89,7 @@ double *LassoRegression::cyclicalCoordinateDescent(double tolerance, double alph
                 std::cout << "MAX CHANGE: " << maxChange << " " << weightIdx << std::endl;
             }
         }
+
         if (maxChange < tolerance) {
             condition = false;
         }
@@ -159,4 +161,14 @@ double *LassoRegression::feature(int featureIdx) {
     }
 
     return result;
+}
+
+void LassoRegression::dumpWeightsToFile() {
+    std::ofstream file;
+    file.open("weights.txt");
+
+    for (int weightIdx = 0; weightIdx < numberOfFeatures; ++weightIdx) {
+        file << weights[weightIdx] << " ";
+    }
+    file.close();
 }
